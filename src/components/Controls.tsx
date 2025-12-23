@@ -194,14 +194,14 @@ export function Controls({
             type="text"
             value={deleteEdgeFrom}
             onChange={(e) => setDeleteEdgeFrom(e.target.value)}
-            placeholder="Từ Cạnh"
+            placeholder="Từ Đỉnh"
             className="flex-1 px-3 py-2 border-2 border-[#8B4513] rounded focus:outline-none focus:ring-2 focus:ring-[#A0522D]"
           />
           <input
             type="text"
             value={deleteEdgeTo}
             onChange={(e) => setDeleteEdgeTo(e.target.value)}
-            placeholder="Đến Cạnh"
+            placeholder="Đến Đỉnh"
             className="flex-1 px-3 py-2 border-2 border-[#8B4513] rounded focus:outline-none focus:ring-2 focus:ring-[#A0522D]"
           />
           <button
@@ -253,7 +253,7 @@ export function Controls({
             type="text"
             value={startNode}
             onChange={(e) => onStartNodeChange(e.target.value)}
-            placeholder="Enter start node"
+            placeholder="Nhập Vào Đỉnh Bắt Đầu"
             className="px-3 py-2 border-2 border-[#8B4513] rounded focus:outline-none focus:ring-2 focus:ring-[#A0522D]"
           />
         </div>
