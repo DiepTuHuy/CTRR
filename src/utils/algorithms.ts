@@ -18,7 +18,7 @@ export function* bfs(graph: Graph, startId: string): Generator<AlgorithmStep> {
       type: 'node-current',
       nodeId: current,
       highlightNodes: Array.from(visited),
-      message: `Visiting node ${current}`
+      message: `Đang Duyệt Đỉnh ${current}`
     };
 
     const neighbors = graph.getNeighbors(current);
@@ -32,7 +32,7 @@ export function* bfs(graph: Graph, startId: string): Generator<AlgorithmStep> {
           edgeFrom: current,
           edgeTo: neighbor.node,
           highlightNodes: Array.from(visited),
-          message: `Discovered ${neighbor.node} from ${current}`
+          message: `Đang Duyệt Cạnh ${neighbor.node} từ ${current}`
         };
       }
     }
@@ -41,7 +41,7 @@ export function* bfs(graph: Graph, startId: string): Generator<AlgorithmStep> {
       type: 'node-complete',
       nodeId: current,
       highlightNodes: Array.from(visited),
-      message: `Completed ${current}. Order: ${order.join(' → ')}`
+      message: `Đã Hoàn Thành ${current}. Thứ Tự: ${order.join(' → ')}`
     };
   }
 }
@@ -60,7 +60,7 @@ export function* dfs(graph: Graph, startId: string): Generator<AlgorithmStep> {
       type: 'node-current',
       nodeId,
       highlightNodes: Array.from(visited),
-      message: `Visiting node ${nodeId}`
+      message: `Đang Duyệt Đỉnh ${nodeId}`
     };
 
     const neighbors = graph.getNeighbors(nodeId);
@@ -70,7 +70,7 @@ export function* dfs(graph: Graph, startId: string): Generator<AlgorithmStep> {
           type: 'edge-visit',
           edgeFrom: nodeId,
           edgeTo: neighbor.node,
-          message: `Exploring edge ${nodeId} → ${neighbor.node}`
+          message: `Đang Duyệt Cạnh ${nodeId} → ${neighbor.node}`
         };
 
         yield* dfsVisit(neighbor.node);
@@ -81,7 +81,7 @@ export function* dfs(graph: Graph, startId: string): Generator<AlgorithmStep> {
       type: 'node-complete',
       nodeId,
       highlightNodes: Array.from(visited),
-      message: `Completed ${nodeId}. Order: ${order.join(' → ')}`
+      message: `Đã hoàn thành ${nodeId}. Thứ tự: ${order.join(' → ')}`
     };
   }
 
@@ -124,7 +124,7 @@ export function* dijkstra(graph: Graph, startId: string, endId: string): Generat
       type: 'node-current',
       nodeId: current,
       highlightNodes: Array.from(visited),
-      message: `Processing ${current} (distance: ${minDistance})`
+      message: `Đang Xử Lý ${current} (khoảng cách: ${minDistance})`
     };
 
     // Update neighbors
@@ -142,7 +142,7 @@ export function* dijkstra(graph: Graph, startId: string, endId: string): Generat
             edgeFrom: current,
             edgeTo: neighbor.node,
             value: newDistance,
-            message: `Updated distance to ${neighbor.node}: ${newDistance}`
+            message: `Đã cập nhật khoảng cách đến ${neighbor.node}: ${newDistance}`
           };
         }
       }
@@ -164,12 +164,12 @@ export function* dijkstra(graph: Graph, startId: string, endId: string): Generat
       path,
       totalWeight: distances.get(end),
       highlightNodes: path,
-      message: `Shortest path: ${path.join(' → ')} (Total weight: ${distances.get(end)})`
+      message: `Đường đi ngắn nhất: ${path.join(' → ')} (Tổng trọng số: ${distances.get(end)})`
     };
   } else {
     yield {
       type: 'path-found',
-      message: `No path exists from ${start} to ${end}`
+      message: `Không tồn tại đường đi từ ${start} đến ${end}`
     };
   }
 }
@@ -193,7 +193,7 @@ export function* checkBipartite(graph: Graph): Generator<AlgorithmStep> {
         type: 'node-current',
         nodeId: current,
         partition: new Map(color),
-        message: `Coloring ${current} with color ${currentColor}`
+        message: `Đang Duyệt Đỉnh ${current} với màu ${currentColor}`
       };
 
       const neighbors = graph.getNeighbors(current);
@@ -207,13 +207,13 @@ export function* checkBipartite(graph: Graph): Generator<AlgorithmStep> {
             edgeFrom: current,
             edgeTo: neighbor.node,
             partition: new Map(color),
-            message: `Coloring ${neighbor.node} with color ${1 - currentColor}`
+            message: `Đang Duyệt Cạnh ${neighbor.node} với màu ${1 - currentColor}`
           };
         } else if (color.get(neighbor.node) === currentColor) {
           yield {
             type: 'partition',
             partition: new Map(color),
-            message: `Graph is NOT bipartite! Found edge ${current}-${neighbor.node} with same color`
+            message: `Đồ Thị Không Là Đồ Thị 2 Phía! Tìm Thấy Cạnh ${current}-${neighbor.node} Cùng Màu`
           };
           return;
         }
@@ -224,7 +224,7 @@ export function* checkBipartite(graph: Graph): Generator<AlgorithmStep> {
   yield {
     type: 'partition',
     partition: new Map(color),
-    message: `Graph is BIPARTITE! Partitions: [${Array.from(color.entries()).filter(([_, c]) => c === 0).map(([n]) => n).join(', ')}] and [${Array.from(color.entries()).filter(([_, c]) => c === 1).map(([n]) => n).join(', ')}]`
+    message: `Đây Là Đồ Thị 2 Phía! Phân Vùng: [${Array.from(color.entries()).filter(([_, c]) => c === 0).map(([n]) => n).join(', ')}] Và [${Array.from(color.entries()).filter(([_, c]) => c === 1).map(([n]) => n).join(', ')}]`
   };
 }
 
@@ -244,7 +244,7 @@ export function* primMST(graph: Graph): Generator<AlgorithmStep> {
     type: 'node-visit',
     nodeId: nodes[0].id,
     highlightNodes: [nodes[0].id],
-    message: `Starting with node ${nodes[0].id}`
+    message: `Đang Bắt Đầu Với Đỉnh ${nodes[0].id}`
   };
 
   while (inMST.size < nodes.length) {
@@ -279,7 +279,7 @@ export function* primMST(graph: Graph): Generator<AlgorithmStep> {
       value: minEdge.weight,
       highlightNodes: Array.from(inMST),
       highlightEdges: [...mstEdges],
-      message: `Added edge ${minEdge.from}-${minEdge.to} (weight: ${minEdge.weight}). Total: ${totalWeight}`
+      message: `Đã thêm cạnh ${minEdge.from}-${minEdge.to} (trọng số: ${minEdge.weight}). Tổng trọng số: ${totalWeight}`
     };
   }
 
@@ -288,7 +288,7 @@ export function* primMST(graph: Graph): Generator<AlgorithmStep> {
     highlightNodes: Array.from(inMST),
     highlightEdges: mstEdges,
     totalWeight,
-    message: `MST complete! Total weight: ${totalWeight}`
+    message: `Cây khung nhỏ nhất hoàn thành! Tổng trọng số: ${totalWeight}`
   };
 }
 
@@ -342,7 +342,7 @@ export function* kruskalMST(graph: Graph): Generator<AlgorithmStep> {
       edgeTo: edge.to,
       value: edge.weight,
       highlightEdges: [...mstEdges],
-      message: `Considering edge ${edge.from}-${edge.to} (weight: ${edge.weight})`
+      message: `Xét cạnh  ${edge.from}-${edge.to} (trọng số: ${edge.weight})`
     };
 
     if (union(edge.from, edge.to)) {
@@ -355,13 +355,13 @@ export function* kruskalMST(graph: Graph): Generator<AlgorithmStep> {
         edgeTo: edge.to,
         value: edge.weight,
         highlightEdges: [...mstEdges],
-        message: `Added edge ${edge.from}-${edge.to}. Total: ${totalWeight}`
+        message: `Đã Thêm Cạnh ${edge.from}-${edge.to}. Tổng Trọng Số: ${totalWeight}`
       };
     } else {
       yield {
         type: 'node-complete',
         highlightEdges: [...mstEdges],
-        message: `Rejected edge ${edge.from}-${edge.to} (would create cycle)`
+        message: `Từ Chối Cạnh ${edge.from}-${edge.to} (Tạo Chu Trình)`
       };
     }
   }
@@ -370,7 +370,7 @@ export function* kruskalMST(graph: Graph): Generator<AlgorithmStep> {
     type: 'node-complete',
     highlightEdges: mstEdges,
     totalWeight,
-    message: `MST complete! Total weight: ${totalWeight}`
+    message: `MST hoàn thành! Tổng trọng số: ${totalWeight}`
   };
 }
 
@@ -407,7 +407,7 @@ export function* fordFulkerson(graph: Graph, sourceId: string, sinkId: string): 
         type: 'node-current',
         nodeId: current,
         highlightNodes: Array.from(visited),
-        message: `Searching for augmenting path: ${path.join(' → ')}`
+        message: `Đang Tìm Đường Tăng Dòng: ${path.join(' → ')}`
       };
 
       if (current === sink) {
@@ -425,7 +425,7 @@ export function* fordFulkerson(graph: Graph, sourceId: string, sinkId: string): 
             edgeFrom: current,
             edgeTo: neighbor,
             value: cap,
-            message: `Found edge ${current} → ${neighbor} (capacity: ${cap})`
+            message: `Tìm Thấy Cạnh ${current} → ${neighbor} (trọng số: ${cap})`
           };
         }
       }
@@ -481,14 +481,14 @@ export function* fordFulkerson(graph: Graph, sourceId: string, sinkId: string): 
       path,
       value: minCap,
       totalWeight: maxFlow,
-      message: `Augmented flow by ${minCap} along path ${path.join(' → ')}. Total flow: ${maxFlow}`
+      message: `Đã Tăng Dòng ${minCap} theo đường ${path.join(' → ')}. Tổng dòng: ${maxFlow}`
     };
   }
 
   yield {
     type: 'node-complete',
     totalWeight: maxFlow,
-    message: `Maximum flow from ${source} to ${sink}: ${maxFlow}`
+    message: `Luồng cực đại từ ${source} đến ${sink}: ${maxFlow}`
   };
 }
 
@@ -539,7 +539,7 @@ export function* hierholzer(graph: Graph): Generator<AlgorithmStep> {
       type: 'node-current',
       nodeId: current,
       path: [...path],
-      message: `Current node: ${current}, Stack: [${stack.join(', ')}]`
+      message: `Đỉnh Gần Nhất: ${current}, Stack: [${stack.join(', ')}]`
     };
 
     const edge = getUnusedEdge(current);
@@ -553,7 +553,7 @@ export function* hierholzer(graph: Graph): Generator<AlgorithmStep> {
         edgeFrom: current,
         edgeTo: edge.to,
         path: [...path],
-        message: `Traversing edge ${current} → ${edge.to}`
+        message: `Đang duyệt cạnh: ${current} → ${edge.to}`
       };
     } else {
       stack.pop();
@@ -563,7 +563,7 @@ export function* hierholzer(graph: Graph): Generator<AlgorithmStep> {
         type: 'euler-path',
         nodeId: current,
         path: [...path],
-        message: `Added ${current} to path. Path: ${path.slice().reverse().join(' → ')}`
+        message: `Đã Thêm ${current} vào đường đi. Đường đi: ${path.slice().reverse().join(' → ')}`
       };
     }
   }
@@ -573,7 +573,7 @@ export function* hierholzer(graph: Graph): Generator<AlgorithmStep> {
   yield {
     type: 'node-complete',
     path,
-    message: `Euler path: ${path.join(' → ')}`
+    message: `Đường Đi Euler: ${path.join(' → ')}`
   };
 }
 
