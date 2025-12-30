@@ -98,7 +98,7 @@ export function Controls({
     }
   };
 
-  const needsStartNode = ['bfs', 'dfs', 'shortest-path'].includes(algorithm);
+  const needsStartNode = ['bfs', 'dfs', 'shortest-path', 'ford-fulkerson'].includes(algorithm);
   const needsEndNode = ['shortest-path', 'ford-fulkerson'].includes(algorithm);
 
   return (
@@ -262,13 +262,13 @@ export function Controls({
       {needsEndNode && (
         <div className="flex flex-col gap-2">
           <label className="text-sm text-[#8B4513] font-semibold">
-            {algorithm === 'ford-fulkerson' ? 'Sink Node' : 'End Node'}
+            {algorithm === 'ford-fulkerson' ? 'Đỉnh Đích' : 'End Node'}
           </label>
           <input
             type="text"
             value={endNode}
             onChange={(e) => onEndNodeChange(e.target.value)}
-            placeholder={`Enter ${algorithm === 'ford-fulkerson' ? 'sink' : 'end'} node`}
+            placeholder={`Nhập Vào ${algorithm === 'ford-fulkerson' ? 'Đỉnh Đích' : 'end'}`}
             className="px-3 py-2 border-2 border-[#8B4513] rounded focus:outline-none focus:ring-2 focus:ring-[#A0522D]"
           />
         </div>

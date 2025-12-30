@@ -435,24 +435,24 @@ export function* fordFulkerson(graph: Graph, sourceId: string, sinkId: string): 
   }
 
   while (true) {
-    const pathGen = findPath();
-    let path: string[] | null = null;
-    
-    for (const step of pathGen) {
-      if (step.type === 'node-current' || step.type === 'edge-visit') {
-        yield step;
+      const pathGen = findPath();
+      let result = pathGen.next();
+      
+      // 1. Chạy vòng lặp để yield các bước trung gian cho UI
+      while (!result.done) {
+        yield result.value as AlgorithmStep; 
+        result = pathGen.next();
       }
-    }
 
-    // Get the final path
-    let result = pathGen.next();
-    while (!result.done) {
-      result = pathGen.next();
-    }
-    path = result.value;
+      // 2. Lúc này result.done = true, và result.value chứa giá trị return (path)
+      const path: string[] | null = result.value;
 
-    if (path === null) break;
+      // 3. Kiểm tra an toàn: Nếu không tìm thấy đường (null) hoặc kết quả lỗi (undefined)
+      if (!path || path.length === 0) {
+        break;
+      }
 
+    // ... tiếp tục phần logic tính minCap và cập nhật residual graph
     // Find minimum capacity along path
     let minCap = Infinity;
     for (let i = 0; i < path.length - 1; i++) {
