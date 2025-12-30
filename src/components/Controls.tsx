@@ -222,25 +222,25 @@ export function Controls({
           className="px-3 py-2 border-2 border-[#8B4513] rounded focus:outline-none focus:ring-2 focus:ring-[#A0522D]"
         >
           <optgroup label="Duyệt Đồ Thị">
-            <option value="bfs">Breadth-First Search (BFS)</option>
-            <option value="dfs">Depth-First Search (DFS)</option>
+            <option value="bfs">Duyệt Theo Chiều Rộng (BFS)</option>
+            <option value="dfs">Duyệt Theo Chiều Sâu (DFS)</option>
           </optgroup>
           <optgroup label="Đường Đi Ngắn Nhất">
-            <option value="shortest-path">Dijkstra's Algorithm</option>
+            <option value="shortest-path">Thuật Toán Dijkstra</option>
           </optgroup>
           <optgroup label="Đặc Điểm Đồ Thị">
-            <option value="bipartite">Bipartite Check</option>
+            <option value="bipartite">Kiểm Tra Đồ Thị 2 Phía</option>
           </optgroup>
           <optgroup label="Cây Khung Nhỏ Nhất">
-            <option value="prim">Prim's Algorithm</option>
-            <option value="kruskal">Kruskal's Algorithm</option>
+            <option value="prim">Thuật Toán Prim</option>
+            <option value="kruskal">Thuật Toán Kruskal</option>
           </optgroup>
           <optgroup label="Luồng Cực Đại">
-            <option value="ford-fulkerson">Ford-Fulkerson Algorithm</option>
+            <option value="ford-fulkerson">Thuật Toán Ford-Fulkerson</option>
           </optgroup>
           <optgroup label="Chu Trình Euler">
-            <option value="hierholzer">Hierholzer's Algorithm</option>
-            <option value="fleury">Fleury's Algorithm</option>
+            <option value="hierholzer">Thuật Toán Hierholzer</option>
+            <option value="fleury">Thuật Toán Fleury</option>
           </optgroup>
         </select>
       </div>
